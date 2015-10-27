@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ListView;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Chronometer focus;
     private long pause;
     ListView listeSauvegarder;
+    private long bloque = 0;
 
     private String test;
     private String[] mStrings;
@@ -65,23 +67,16 @@ public class MainActivity extends AppCompatActivity {
                 if (pause > 1){
                     focus.setBase(focus.getBase() + SystemClock.elapsedRealtime() - pause);
                     focus.start();
-                    pitons[0].setEnabled(false);
-                    pitons[1].setEnabled(false);
-                    pitons[2].setEnabled(false);
-                    pitons[3].setEnabled(false);
                     pitons[4].setEnabled(false);
                     pitons[5].setEnabled(true);
                     pitons[6].setEnabled(true);
                     pitons[7].setEnabled(true);
+                    pitons[7].setText("off");
                     pitons[8].setEnabled(true);
                 }
                 else {
                     focus.setBase(SystemClock.elapsedRealtime());
                     focus.start();
-                    pitons[0].setEnabled(false);
-                    pitons[1].setEnabled(false);
-                    pitons[2].setEnabled(false);
-                    pitons[3].setEnabled(false);
                     pitons[4].setEnabled(false);
                     pitons[5].setEnabled(true);
                     pitons[6].setEnabled(true);
@@ -97,10 +92,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 pause = SystemClock.elapsedRealtime();
                 focus.stop();
-                pitons[0].setEnabled(false);
-                pitons[1].setEnabled(false);
-                pitons[2].setEnabled(false);
-                pitons[3].setEnabled(false);
                 pitons[4].setEnabled(true);
                 pitons[5].setEnabled(false);
             }
@@ -112,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 pitons[4].setText("Début");
                 pause = 0;
+                bloque = 0;
                 focus.setBase(SystemClock.elapsedRealtime());
                 focus.clearFocus();
                 focus.stop();
@@ -122,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 pitons[4].setEnabled(true);
                 pitons[5].setEnabled(false);
                 pitons[6].setEnabled(false);
+                pitons[7].setText("off");
                 pitons[7].setEnabled(false);
                 pitons[8].setEnabled(false);
             }
@@ -131,10 +124,19 @@ public class MainActivity extends AppCompatActivity {
         pitons[7].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pitons[0].setEnabled(true);
-                pitons[1].setEnabled(true);
-                pitons[2].setEnabled(true);
-                pitons[3].setEnabled(true);
+                if (bloque == 0) {
+                    pitons[0].setEnabled(true);
+                    pitons[1].setEnabled(true);
+                    pitons[2].setEnabled(true);
+                    pitons[3].setEnabled(true);
+                    bloque = 1;
+                } else if (bloque == 1){
+                    pitons[0].setEnabled(false);
+                    pitons[1].setEnabled(false);
+                    pitons[2].setEnabled(false);
+                    pitons[3].setEnabled(false);
+                    bloque = 0;
+                }
             }
         });
 
@@ -142,23 +144,10 @@ public class MainActivity extends AppCompatActivity {
         pitons[8].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pitons[0].setEnabled(false);
-                pitons[1].setEnabled(false);
-                pitons[2].setEnabled(false);
-                pitons[3].setEnabled(false);
-
                 for (int i = 0;i <= 3;i++){
                     mStrings[i] = (test = Objects.toString(pause));
                     listeSauvegarder = (ListView) findViewById(R.id.listSauvegarder);
-
-                    //Création de l'adapter
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout., mStrings);
-
-                    //Récupération du ListView présent dans notre IHM
-                    ListView list = (ListView)findViewById(R.id.listSauvegarder);
-
-                    //On passe nos données au composant ListView
-                    list.setAdapter(adapter);
+                    //listeSauvegarder.get
                 }
             }
         });
