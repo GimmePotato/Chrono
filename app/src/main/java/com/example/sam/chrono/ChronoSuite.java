@@ -1,24 +1,23 @@
 package com.example.sam.chrono;
 
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ListView;
 
-import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class ChronoSuite extends AppCompatActivity {
+
     Button[] pitons;
     Chronometer focus;
     private long pause;
@@ -29,14 +28,14 @@ public class MainActivity extends AppCompatActivity {
     private String[] mStrings;
 
     public void onClick(View v) {
-        Intent intent = new Intent(this,ChronoSuite.class);
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chrono_suite);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,24 +47,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        // Initialiser les bouttons
-        pitons = new Button[10];
-
-        pitons[0] = (Button) findViewById(R.id.btnMinutesPlus);
-        pitons[1] = (Button) findViewById(R.id.btnMinutesMoins);
-        pitons[2] = (Button) findViewById(R.id.btnSecondesPlus);
-        pitons[3] = (Button) findViewById(R.id.btnSecondesMoins);
-        pitons[4] = (Button) findViewById(R.id.btndebut);
-        pitons[5] = (Button) findViewById(R.id.btnarret);
-        pitons[6] = (Button) findViewById(R.id.btnReinitialiser);
-        pitons[7] = (Button) findViewById(R.id.tglTemps);
-        pitons[8] = (Button) findViewById(R.id.btnSauvegarder);
-        pitons[9] = (Button) findViewById(R.id.btnChanger);
-
-        // Initialiser le timer
-        focus = (Chronometer) findViewById(R.id.chrTemps);
-
-        // Permet de pouvoir partir le chronomètre
         pitons[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
